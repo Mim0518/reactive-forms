@@ -1,7 +1,10 @@
 <h2>Reactivos: <small> Dinámicos </small></h2>
 <hr>
 
-<form autocomplete="off" [formGroup]="myForm">
+<form autocomplete="off"
+      [formGroup]="myForm"
+      (ngSubmit)="onSubmit()"
+>
 
   <!-- Nombre -->
   <div class="mb-3 row">
@@ -23,11 +26,18 @@
     <label class="col-sm-3 col-form-label">Agregar</label>
     <div class="col-sm-9">
       <div class="input-group">
-        <input class="form-control"
-               placeholder="Agregar favorito">
+        <input
+            class="form-control"
+            placeholder="Agregar favorito"
+            [formControl]="newFavoriteItem"
+            (keydown.enter)="onAddFavorite()"
+            (keydown.enter)="$event.preventDefault()"
+        />
 
-        <button class="btn btn-outline-primary"
-                type="button">
+        <button
+            class="btn btn-outline-primary"
+            type="button"
+            (click)="onAddFavorite()">
           Agregar favorito
         </button>
       </div>
@@ -43,11 +53,12 @@
             <div class="mb-1">
                 <div class="input-group">
                     <input class="form-control"
-                    [formControlName]="i"
-                    >
+                    [formControlName]="i"/>
+
                     <button
                         class="btn btn-outline-danger"
-                        type="button">
+                        type="button"
+                        (click)="onRemoveFavorite(i)">
                         Eliminar
                     </button>
                 </div>
@@ -57,23 +68,23 @@
                     </span>
                 }
             </div>
+        } @if (formUtils.isValidField(myForm, 'favorites')) {
+        <span class="form-text text-danger">
+              Debe haber al menos 3 favoritos
+        </span>
         }
     </div>
   </div>
-
-
-
   <div class="row">
     <div class="col-sm-12">
-      <button type="submit"
-              class="btn btn-primary float-end">
-        <!-- [disabled]="myForm.invalid" -->
+      <button
+          type="submit"
+          class="btn btn-primary float-end"
+          [disabled]="myForm.invalid">
         Guardar
       </button>
     </div>
   </div>
-
-
 </form>
 
 
@@ -83,10 +94,11 @@
 <br>
 
 <span>Value</span>
-
 <pre>{{ myForm.value | json }}</pre>
 <br>
 
-<!--<span>Agregar Juego</span>-->
-<!--<pre>{{ 'object' | json }}</pre>-->
-<!--<pre>{{ 'object' | json }}</pre>-->
+<span>Errores</span>
+<pre>{{ myForm.controls['favorites'].errors | json }}</pre>
+<br>
+<span>Valor</span>
+<pre>{{ myForm.controls['favorites'].value | json }}</pre>
