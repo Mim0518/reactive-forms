@@ -3,111 +3,152 @@
 
 <div class="row">
   <div class="col">
-
-    <form autocomplete="off">
-
+    <form
+      autocomplete="off"
+      [formGroup]="registerForm"
+      (ngSubmit)="onSubmit()"
+    >
       <!-- Nombre -->
       <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Nombre y apellido</label>
         <div class="col-sm-9">
-          <input type="text"
-                 class="form-control"
-                 placeholder="Nombre del usuario">
-
-          <span class="form-text text-danger">
-                        Debe de ser en formato de nombre y apellido
-                    </span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Nombre del usuario"
+            formControlName="name"
+          />
+          @if (formUtils.isValidField(registerForm, 'name')) {
+            <span class="form-text text-danger">
+              {{ formUtils.getFieldError(registerForm, "name") }}
+            </span>
+          }
         </div>
       </div>
-
       <!-- Email -->
       <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Email</label>
         <div class="col-sm-9">
-          <input type="email"
-                 class="form-control"
-                 placeholder="Email del usuario">
-          <span class="form-text text-danger">
-                        mensaje de error del email
-                    </span>
+          <input
+            type="email"
+            class="form-control"
+            placeholder="Email del usuario"
+            formControlName="email"
+          />
+          @if (formUtils.isValidField(registerForm, 'email')) {
+            <span class="form-text text-danger">
+              {{ formUtils.getFieldError(registerForm, "email") }}
+            </span>
+          }
         </div>
       </div>
-
       <!-- Username -->
       <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Username</label>
         <div class="col-sm-9">
-          <input type="text"
-                 class="form-control"
-                 placeholder="Nombre código del usuario">
-          <span class="form-text text-danger">
-                         El username no puede ser Strider
-                    </span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Nombre de usuario"
+            formControlName="username"/>
+          @if (formUtils.isValidField(registerForm, 'username')) {
+            <span class="form-text text-danger">
+              {{ formUtils.getFieldError(registerForm, "username") }}
+            </span>
+          }
         </div>
       </div>
-
       <!-- Password -->
       <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Password</label>
         <div class="col-sm-9">
-          <input type="password"
-                 class="form-control"
-                 placeholder="Password de su cuenta">
-
-          <span class="form-text text-danger">
-                         La contraseña debe de ser mayor de 6 caracteres.
-                    </span>
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Password de su cuenta"
+            formControlName="password"
+          />
+          @if (formUtils.isValidField(registerForm, 'password')) {
+            <span class="form-text text-danger">
+              {{ formUtils.getFieldError(registerForm, "password") }}
+            </span>
+          }
         </div>
       </div>
-
-      <!-- Password2 -->
+      <!-- Password Confirmation -->
       <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Confirmar</label>
         <div class="col-sm-9">
-          <input type="password"
-                 class="form-control"
-                 placeholder="Confirmar la contraseña">
-
-          <span class="form-text text-danger">
-                         Las contraseñas deben de ser iguales
-                    </span>
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Confirmar la contraseña"
+            formControlName="confirmPassword"
+          />
+          @if (formUtils.isValidField(registerForm, 'confirmPassword')) {
+            <span class="form-text text-danger">
+              {{ formUtils.getFieldError(registerForm, "confirmPassword") }}
+            </span>
+          }
         </div>
       </div>
-
-
+      <!-- Submit Button -->
       <div class="row">
         <div class="col">
-          <button class="btn btn-primary float-end"
-                  type="submit">
+          @if(registerForm.errors && registerForm.touched){
+            <span class="form-text text-danger">
+              Las contraseñas deben ser iguales y tener al menos 6 caracteres
+            </span>
+          }
+          <button
+            class="btn btn-primary float-end"
+            type="submit"
+          >
             Crear
           </button>
         </div>
       </div>
-
-
     </form>
   </div>
 </div>
 
 
-<h2>Form Valid: </h2>
-<h2>Form Status: </h2>
-<h2>Form Pending: </h2>
-<h2>Form errors</h2>
-<pre>{{ 'formulario' | json }}</pre>
+<h5>Form Valid: </h5>
+<pre>{{ registerForm.valid | json }}</pre>
+<br>
+
+<h5>Form Status: </h5>
+<pre>{{ registerForm.status | json }}</pre>
+<br>
+
+<h5>Form Pending: </h5>
+<pre>{{ registerForm.pending | json }}</pre>
+<br>
+
+<h5>Form errors</h5>
+<pre>{{ registerForm.errors | json }}</pre>
+<br>
+
+<h5>Form value</h5>
+<pre>{{ registerForm.value | json }}</pre>
+<br>
 
 <h5>Nombre</h5>
-<pre>{{ 'formulario' | json }}</pre>
+<pre>{{ registerForm.controls['name'].errors | json }}</pre>
+<br>
 
 <h5>Email</h5>
-<pre>{{ 'formulario' | json }}</pre>
+<pre>{{ registerForm.controls['email'].errors | json }}</pre>
+<br>
 
 <h5>Username</h5>
-<pre>{{ 'formulario' | json }}</pre>
-
+<pre>{{ registerForm.controls['username'].errors | json }}</pre>
+<br>
 
 <h5>Password</h5>
-<pre>{{ 'formulario' | json }}</pre>
+<pre>{{ registerForm.controls['password'].errors | json }}</pre>
+<br>
 
 <h5>Confirmar</h5>
-<pre>{{ 'formulario' | json }}</pre>
+<pre>{{ registerForm.controls['confirmPassword'].errors | json }}</pre>
+<br>

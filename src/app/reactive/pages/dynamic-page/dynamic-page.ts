@@ -33,16 +33,6 @@ export class DynamicPage {
         this.myForm.setControl('favorites', value);
     }
 
-    onSubmit(){
-        if(this.myForm.invalid){
-            this.myForm.markAllAsTouched();
-            return;
-        }
-        console.log(this.myForm.value);
-        this.favorites = this.fb.array([]);
-        this.myForm.reset();
-    }
-
     onAddFavorite(){
         if(this.newFavoriteItem.invalid) return;
         const newFavorite = this.newFavoriteItem.value;
@@ -53,4 +43,14 @@ export class DynamicPage {
     onRemoveFavorite(index:number){
         this.favorites.removeAt(index);
     }
+
+  onSubmit(){
+    if(this.myForm.invalid){
+      this.myForm.markAllAsTouched();
+      return;
+    }
+    console.log(this.myForm.value);
+    this.favorites = this.fb.array([]);
+    this.myForm.reset();
+  }
 }
