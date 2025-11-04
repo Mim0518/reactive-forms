@@ -35,6 +35,8 @@ export class FormUtils {
           return `El campo debe ser un correo valido`;
         case 'pattern':
           return `El campo debe tener un formato valido`;
+        case 'takenUsername':
+          return `El nombre de usuario ya esta en uso`;
       }
     }
     // console.log("No hay errores")
@@ -83,5 +85,11 @@ export class FormUtils {
       };
     }
     return null;
+  }
+
+  static takenUsername(control: AbstractControl){
+    const value = control.value;
+    return value === 'administrador' ? {takenUsername: true} : null;
+
   }
 }
